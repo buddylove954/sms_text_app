@@ -5,8 +5,8 @@ class Api::V1::MessagesController < ApplicationController
     phone_number = params[:phone_number]
     body = params[:body]
 
-    if /^(3|4)/.match?(phone_number)
-      render status: :bad_request, json: { error: "Invalid Phone number: #{phone_number}, phone numbers cannot start with a 3 or 4"}
+    if /^(3|4)/.match?(phone_number) || Message.find_by(phone_number: phone_number, status: "invalid").present?
+      render status: :bad_request, json: { error: "Invalid Phone number: #{phone_number}"}
     elsif phone_number.empty? || body.empty?
       render status: :bad_request, json: { error: "Missing required params"}
     else
