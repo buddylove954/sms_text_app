@@ -7,8 +7,8 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
       let(:valid_params) { { phone_number: '1234567890', body: 'Hello, world!' } }
 
       before do
-        WebMock.stub_request(:post, "https://mock-text-provider.parentsquare.com/provider1").to_return(status: 200, body: "{\"to_number\":\"9547653214\",\"message\":\"Hello, world!\",\"callback_url\":\"https://test.ngrok-free.app/api/v1/messages/callback\"}")
-        WebMock.stub_request(:post, "https://mock-text-provider.parentsquare.com/provider2").to_return(status: 200, body: "{\"to_number\":\"2813308004\",\"message\":\"Hello, there!\",\"callback_url\":\"https://test.ngrok-free.app/api/v1/messages/callback\"}")
+        WebMock.stub_request(:post, "https://mock-text-provider.parentsquare.com/provider1").to_return(status: 200, body: "{\"message_id\":\"2h3d4-jd74h-jdg784-ncvsf-3kd2l\"}")
+        WebMock.stub_request(:post, "https://mock-text-provider.parentsquare.com/provider2").to_return(status: 200, body: "{\"message_id\":\"auh42-mcb54-ljfg8-nbdw2-qo8ld\"}")
       end
 
       it 'creates a new message' do
