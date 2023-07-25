@@ -19,6 +19,7 @@ class Api::V1::MessagesController < ApplicationController
       # Try sending the message using each provider until one is successful
       providers_to_try.each do |provider_class|
         begin
+          # Things to add: timeout rescue 
           provider_instance = provider_class.new
           successful_response = provider_instance.send_sms(phone_number, body, callback_url)
           
@@ -52,7 +53,5 @@ class Api::V1::MessagesController < ApplicationController
       render json: { status: :not_found, error: "Message: #{params[:message_id]} not found"}
     end
   end
-
-  private
   
 end
