@@ -6,6 +6,7 @@ class SmsProviders::ProviderOne
     url = URI.parse("https://mock-text-provider.parentsquare.com/provider1")
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true 
+    http.read_timeout = 10
 
     request = Net::HTTP::Post.new(url.path)
     request['Content-Type'] = 'application/json'

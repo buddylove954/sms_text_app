@@ -19,7 +19,6 @@ class Api::V1::MessagesController < ApplicationController
       # Try sending the message using each provider until one is successful
       providers_to_try.each do |provider_class|
         begin
-          # Things to add: timeout rescue 
           provider_instance = provider_class.new
           successful_response = provider_instance.send_sms(phone_number, body, callback_url)
           
@@ -27,6 +26,8 @@ class Api::V1::MessagesController < ApplicationController
           break if successful_response.code == 200
         rescue StandardError => e
           Rails.logger.error("Failed to send message using #{provider_class.name}: #{e.message}")
+        rescue Timeout::Error
+          Rails.logger.error("Message to #{phone_number} Timed out using #{provider_class.name}")
         end
       end
 
